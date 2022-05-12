@@ -49,6 +49,7 @@ if __name__ == "__main__":
     n = input_int("Export or Import (0 or 1): ",0,1)
 
     choice_mode = switcher_mode.get(n,"Invalid choice")
+    print("Choice: "+choice_mode+" mode")
 
     cmd = "cd " + pathmongodb
     returned_value = os.system(cmd) 
@@ -56,13 +57,13 @@ if __name__ == "__main__":
     dbs = client.list_database_names()
     print("Len "+str(len(dbs))+": "+str(dbs))
 
-    m = input_int("Index of db name: ",0,len(dbs)-1)
+    m = input_int("Index of db name (0-"+str(len(dbs)-1)+"): ",0,len(dbs)-1)
     database_name = dbs[m]
     print("Choice: "+database_name)
     collections = client[database_name].list_collection_names()
     print("Len "+str(len(collections))+": "+str(collections))
 
-    p = input_int("Index of collection name (-1 = all): ",-1,len(collections)-1)
+    p = input_int("Index of collection name (-1 = all) || (0-"+str(len(collections)-1)+"): ",-1,len(collections)-1)
 
     if(p==-1):
         run_all(choice_mode,database_name,collections)
