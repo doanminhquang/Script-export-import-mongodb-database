@@ -22,21 +22,21 @@ def mongoimport(database_name,collection_name,path):
     os.system(cmd) 
 
 def run_single(choice_mode,database_name,collection_name):
-    print("Choice: "+collection_name)
-    if(choice_mode == 'Export'):
-        path_output = 'data/export/'+collection_name+'.json'
-        mongoexport(database_name,collection_name,path_output)
-    else:
-        path_input = 'data/import/'+collection_name+'.json'
-        mongoimport(database_name,collection_name,path_input)  
-
-def run_all(choice_mode,database_name,collections):            
     try:
-        for n in range(len(collections)):
-            collection_name = collections[n]
-            run_single(choice_mode,database_name,collection_name)         
+        print("Choice: "+collection_name)
+        if(choice_mode == 'Export'):
+            path_output = 'data/export/'+collection_name+'.json'
+            mongoexport(database_name,collection_name,path_output)
+        else:
+            path_input = 'data/import/'+collection_name+'.json'
+            mongoimport(database_name,collection_name,path_input)  
     except IOError:
         print("File not accessible")
+
+def run_all(choice_mode,database_name,collections):            
+    for n in range(len(collections)):
+        collection_name = collections[n]
+        run_single(choice_mode,database_name,collection_name)         
 
 if __name__ == "__main__":
 
