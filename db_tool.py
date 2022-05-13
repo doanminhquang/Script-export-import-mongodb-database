@@ -3,6 +3,10 @@ import os.path
 import zipfile
 from datetime import datetime
 from pymongo import MongoClient
+
+global_root = 'data'
+global_export = global_root+'/export/'
+global_import = global_root+'/import/'
     
 def zipdir(path, ziph):
     for root, dirs, files in os.walk(path):
@@ -35,10 +39,10 @@ def run_single(choice_mode,database_name,collection_name):
     try:
         print("Choice: "+collection_name)
         if(choice_mode == switcher_mode[0]):
-            path_output = 'data/export/'+database_name+'/'+collection_name+'.json'
+            path_output = global_export+database_name+'/'+collection_name+'.json'
             mongoexport(database_name,collection_name,path_output)
         else:
-            path_input = 'data/import/'+collection_name+'.json'
+            path_input = global_import+collection_name+'.json'
             mongoimport(database_name,collection_name,path_input)  
     except IOError:
         print("File not accessible")
@@ -49,8 +53,8 @@ def run_all(choice_mode,database_name,collections):
         run_single(choice_mode,database_name,collection_name)      
     if(choice_mode == switcher_mode[0]):
         timestr = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
-        with zipfile.ZipFile('data/export/'+database_name+'_'+timestr+'.zip', 'w', zipfile.ZIP_DEFLATED) as zipf:
-            zipdir('data/export/'+database_name+'/', zipf) 
+        with zipfile.ZipFile(global_export+database_name+'_'+timestr+'.zip', 'w', zipfile.ZIP_DEFLATED) as zipf:
+            zipdir(global_export+database_name+'/', zipf) 
 
 if __name__ == "__main__":
 
@@ -95,19 +99,19 @@ if __name__ == "__main__":
     
     if choice_mode != switcher_mode[2]:
         collections = client[database_name].list_collection_names()
-        for j in range(len(collections)):
-            print("\t"+str(j)+" : "+collections[j])
         min = -1
         max = len(collections)-1
-        p = input_int("Index of collection name ("+str(min)+" = all) || ("+str(min+1)+"-"+str(max)+"): ",min,max)
     else:
         collections = []
-        for filename in os.listdir("data/import/"):
+        for filename in os.listdir(global_import):
             if filename.endswith(".json"):
                 collections.append(os.path.splitext(filename)[0])
         min = -1
         max = len(collections)-1
-        p = input_int("Index of collection name ("+str(min)+" = all) || ("+str(min+1)+"-"+str(max)+"): ",min,max)
+    
+    for j in range(len(collections)):
+        print("\t"+str(j)+" : "+collections[j])
+    p = input_int("Index of collection name ("+str(min)+" = all) || ("+str(min+1)+"-"+str(max)+"): ",min,max)
 
     if(p==-1):
         run_all(choice_mode,database_name,collections)
