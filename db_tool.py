@@ -73,7 +73,16 @@ if __name__ == "__main__":
 
     choice_mode = switcher_mode.get(n,"Invalid choice")
     print("***** Choice: "+choice_mode+" mode")  
-
+    
+    if choice_mode != switcher_mode[0]:
+        tmp_collections = []
+        for filename in os.listdir(global_import):
+            if filename.endswith(".json"):
+                tmp_collections.append(os.path.splitext(filename)[0])        
+        if len(tmp_collections) == 0 :
+            print("File import not found")
+            raise SystemExit
+    
     cmd = "cd " + pathmongodb
     returned_value = os.system(cmd) 
 
@@ -96,19 +105,13 @@ if __name__ == "__main__":
         database_name = input("----- Enter db name: ")
     
     print("***** Choice: "+database_name)
-    
+
     if choice_mode != switcher_mode[2]:
         collections = client[database_name].list_collection_names()
         min = -1
         max = len(collections)-1
     else:
-        collections = []
-        for filename in os.listdir(global_import):
-            if filename.endswith(".json"):
-                collections.append(os.path.splitext(filename)[0])        
-        if len(collections) == 0 :
-            print("File import not found")
-            raise SystemExit
+        collections = tmp_collections
         min = -1
         max = len(collections)-1
 
