@@ -88,11 +88,13 @@ if __name__ == "__main__":
         max = len(collections)-1
         p = input_int("Index of collection name ("+str(min)+" = all) || ("+str(min+1)+"-"+str(max)+"): ",min,max)
     else:
-        p=-1
         collections = []
         for filename in os.listdir("data/import/"):
             if filename.endswith(".json"):
                 collections.append(os.path.splitext(filename)[0])
+        min = -1
+        max = len(collections)-1
+        p = input_int("Index of collection name ("+str(min)+" = all) || ("+str(min+1)+"-"+str(max)+"): ",min,max)
 
     if(p==-1):
         run_all(choice_mode,database_name,collections)
