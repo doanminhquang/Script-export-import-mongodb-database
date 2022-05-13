@@ -1,4 +1,5 @@
 import os
+import os.path
 from pymongo import MongoClient
 
 def input_int(str,min,max):
@@ -24,7 +25,7 @@ def mongoimport(database_name,collection_name,path):
 def run_single(choice_mode,database_name,collection_name):
     try:
         print("Choice: "+collection_name)
-        if(choice_mode == 'Export'):
+        if(choice_mode == switcher_mode[0]):
             path_output = 'data/export/'+collection_name+'.json'
             mongoexport(database_name,collection_name,path_output)
         else:
@@ -44,26 +45,54 @@ if __name__ == "__main__":
 
     client = MongoClient(host="localhost", port=27017)
 
-    switcher_mode={0:'Export', 1:'Import'}
+    switcher_mode={0:'Export', 1:'Import', 2:'Import And Create'}
 
-    n = input_int("Export or Import (0 or 1): ",0,1)
+    for j in range(len(switcher_mode)):
+        print("\t"+str(j)+" : "+switcher_mode[j])
+
+    min = 0
+    max = len(switcher_mode)-1
+    n = input_int("Enter selection ("+str(min)+"-"+str(max)+"): ",min,max)
 
     choice_mode = switcher_mode.get(n,"Invalid choice")
-    print("Choice: "+choice_mode+" mode")
+    print("Choice: "+choice_mode+" mode")  
 
     cmd = "cd " + pathmongodb
     returned_value = os.system(cmd) 
 
     dbs = client.list_database_names()
-    print("Len "+str(len(dbs))+": "+str(dbs))
+    for j in range(len(dbs)):
+        print("\t"+str(j)+" : "+dbs[j])
 
-    m = input_int("Index of db name (0-"+str(len(dbs)-1)+"): ",0,len(dbs)-1)
-    database_name = dbs[m]
+    if choice_mode != switcher_mode[2]:
+        min = 0
+        max = len(dbs)-1
+        m = input_int("Index of db name ("+str(min)+"-"+str(max)+"): ",min,max)
+    else:
+        min = -1
+        max = len(dbs)-1
+        m = input_int("Index of db name ("+str(min)+" = create new) || ("+str(min+1)+"-"+str(max)+"): ",min,max)
+
+    if m != -1 :
+        database_name = dbs[m]
+    else:
+        database_name = input("Enter db name: ")
+    
     print("Choice: "+database_name)
-    collections = client[database_name].list_collection_names()
-    print("Len "+str(len(collections))+": "+str(collections))
-
-    p = input_int("Index of collection name (-1 = all) || (0-"+str(len(collections)-1)+"): ",-1,len(collections)-1)
+    
+    if choice_mode != switcher_mode[2]:
+        collections = client[database_name].list_collection_names()
+        for j in range(len(collections)):
+            print("\t"+str(j)+" : "+collections[j])
+        min = -1
+        max = len(collections)-1
+        p = input_int("Index of collection name ("+str(min)+" = all) || ("+str(min+1)+"-"+str(max)+"): ",min,max)
+    else:
+        p=-1
+        collections = []
+        for filename in os.listdir("data/import/"):
+            if filename.endswith(".json"):
+                collections.append(os.path.splitext(filename)[0])
 
     if(p==-1):
         run_all(choice_mode,database_name,collections)
