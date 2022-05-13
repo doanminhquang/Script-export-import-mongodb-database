@@ -1,6 +1,15 @@
 import os
 import os.path
+import zipfile
+from datetime import datetime
 from pymongo import MongoClient
+    
+def zipdir(path, ziph):
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            ziph.write(os.path.join(root, file), 
+                       os.path.relpath(os.path.join(root, file), 
+                                       os.path.join(path, '..')))
 
 def input_int(str,min,max):
     while True:
@@ -26,7 +35,7 @@ def run_single(choice_mode,database_name,collection_name):
     try:
         print("Choice: "+collection_name)
         if(choice_mode == switcher_mode[0]):
-            path_output = 'data/export/'+collection_name+'.json'
+            path_output = 'data/export/'+database_name+'/'+collection_name+'.json'
             mongoexport(database_name,collection_name,path_output)
         else:
             path_input = 'data/import/'+collection_name+'.json'
@@ -37,7 +46,11 @@ def run_single(choice_mode,database_name,collection_name):
 def run_all(choice_mode,database_name,collections):            
     for n in range(len(collections)):
         collection_name = collections[n]
-        run_single(choice_mode,database_name,collection_name)         
+        run_single(choice_mode,database_name,collection_name)      
+    if(choice_mode == switcher_mode[0]):
+        timestr = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
+        with zipfile.ZipFile('data/export/'+database_name+'_'+timestr+'.zip', 'w', zipfile.ZIP_DEFLATED) as zipf:
+            zipdir('data/export/'+database_name+'/', zipf) 
 
 if __name__ == "__main__":
 
