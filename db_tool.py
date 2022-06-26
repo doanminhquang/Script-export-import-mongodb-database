@@ -60,7 +60,24 @@ if __name__ == "__main__":
 
     pathmongodb = "C:\\Program Files\\MongoDB\\Server\\5.0\\bin"
 
-    client = MongoClient(host="localhost", port=27017)
+    switcher_dbmode={0:'Local', 1:'Alat'}
+
+    for j in range(len(switcher_dbmode)):
+        print(str(j)+" : "+switcher_dbmode[j])
+        
+    min = 0
+    max = len(switcher_dbmode)-1
+    n_db = input_int("----- Enter selection ("+str(min)+"-"+str(max)+"): ",min,max)
+    
+    global client
+    
+    if n_db == 0:
+        client = MongoClient(host="localhost", port=27017)
+    else:
+        client = MongoClient("")
+
+    choice_dbmode = switcher_dbmode.get(n_db,"Invalid choice")
+    print("***** Choice: "+choice_dbmode+" mode")  
 
     switcher_mode={0:'Export', 1:'Import', 2:'Import And Create'}
 
