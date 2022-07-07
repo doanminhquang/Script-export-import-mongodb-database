@@ -4,7 +4,7 @@ import zipfile
 from datetime import datetime
 from pymongo import MongoClient
 
-global_root = 'dataaa/'
+global_root = 'dataa/'
 global_export = global_root+'export/'
 global_import = global_root+'import/'
     
