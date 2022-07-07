@@ -5,8 +5,8 @@ from datetime import datetime
 from pymongo import MongoClient
 
 global_root = 'data/'
-global_export = global_root+'export/'
-global_import = global_root+'import/'
+global_export = global_root + 'export/'
+global_import = global_root + 'import/'
     
 def zipdir(path, ziph):
     for root, dirs, files in os.walk(path):
