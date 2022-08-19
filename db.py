@@ -86,7 +86,7 @@ if __name__ == "__main__":
 
     min = 0
     max = len(switcher_mode)-1
-    n = input_int("----- Enter selection (" + str(min)+"-"+str(max)+"): ",min,max)
+    n = input_int("----- Enter selection (" + str(min) + "-"+str(max)+"): ",min,max)
 
     choice_mode = switcher_mode.get(n,"Invalid choice")
     print("***** Choice: " + choice_mode + " mode")  
