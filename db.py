@@ -89,7 +89,7 @@ if __name__ == "__main__":
     n = input_int("----- Enter selection ("+str(min)+"-"+str(max)+"): ",min,max)
 
     choice_mode = switcher_mode.get(n,"Invalid choice")
-    print("***** Choice: " + choice_mode+" mode")  
+    print("***** Choice: " + choice_mode + " mode")  
     
     if choice_mode != switcher_mode[0]:
         tmp_collections = []
