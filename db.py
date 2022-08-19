@@ -28,6 +28,9 @@ def create_directory_not_exist(path):
     isExist = os.path.exists(path)
     if not isExist:
       os.makedirs(path)
+      
+def len_folder(path):
+    return len([name for name in os.listdir(path) if os.path.isfile(os.path.join(path, name))])
 
 def input_int(str, min, max):
     while True:
@@ -70,7 +73,7 @@ def run_all(choice_mode, database_name, collections):
         timestr = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
         path_folder = global_export + database_name
         
-        len_file = len([name for name in os.listdir(path_folder) if os.path.isfile(os.path.join(path_folder, name))])
+        len_file = len_folder(path_folder)
         
         if len_file != 0:        
             create_readme(path_folder)       
@@ -176,5 +179,9 @@ if __name__ == "__main__":
         else:
             collection_name = collections[p]
             run_single(choice_mode, database_name, collection_name)   
-            if(choice_mode == switcher_mode[0]):            
-                create_readme(path_dir)
+            
+            if(choice_mode == switcher_mode[0]):     
+                len_file = len_folder(path_dir)
+                
+                if len_file != 0:              
+                    create_readme(path_dir)
