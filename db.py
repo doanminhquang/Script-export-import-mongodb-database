@@ -50,7 +50,7 @@ def run_single(choice_mode,database_name,collection_name):
 def run_all(choice_mode, database_name, collections):            
     for n in range(len(collections)):
         collection_name = collections[n]
-        run_single(choice_mode, database_name,collection_name)      
+        run_single(choice_mode, database_name, collection_name)      
     if(choice_mode == switcher_mode[0]):
         timestr = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
         with zipfile.ZipFile(global_export + database_name + '_' + timestr + '.zip', 'w', zipfile.ZIP_DEFLATED) as zipf:
