@@ -126,7 +126,7 @@ if __name__ == "__main__":
     if choice_mode != switcher_mode[2]:
         collections = client[database_name].list_collection_names()
         min = -1
-        max = len(collections)-1
+        max = len(collections) - 1
     else:
         collections = tmp_collections
         min = -1
