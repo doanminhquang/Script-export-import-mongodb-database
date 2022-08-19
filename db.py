@@ -35,7 +35,7 @@ def mongoimport(database_name, collection_name, path):
     cmd = "mongoimport --db " + database_name + " --collection " + collection_name + " --file "+ path
     os.system(cmd) 
 
-def run_single(choice_mode, database_name,collection_name):
+def run_single(choice_mode, database_name, collection_name):
     try:
         print("***** Choice: "+collection_name)
         if(choice_mode == switcher_mode[0]):
