@@ -133,7 +133,7 @@ if __name__ == "__main__":
         max = len(collections)-1
 
     for j in range(len(collections)):
-        print(str(j)+" : "+collections[j])
+        print(str(j) + " : "+collections[j])
     p = input_int("----- Enter index of collection name (" + str(min) + " = all) || (" + str(min+1) + "-" + str(max) + "): ", min, max)
 
     if(p == -1):
