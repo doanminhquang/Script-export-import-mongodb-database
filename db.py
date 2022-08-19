@@ -1,4 +1,5 @@
 import os
+import json
 import urllib 
 import zipfile
 from datetime import datetime
@@ -59,89 +60,92 @@ def run_all(choice_mode, database_name, collections):
 
 if __name__ == "__main__":
 
-    pathmongodb = "C:\\Program Files\\MongoDB\\Server\\5.0\\bin"
-    username = ""
-    password = urllib.parse.quote("")
-    conn = "mongodb+srv://"+username+":"+password+"@qlms.wo0ki.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    with open("config.json") as json_data_file:
+        data = json.load(json_data_file) 
 
-    switcher_dbmode = {0:'Local', 1:'Alat'}
+        pathmongodb = data["pathmongodb"]
+        username = data["username"]
+        password = urllib.parse.quote(data["password"])
+        conn = "mongodb+srv://"+username+":"+password+"@qlms.wo0ki.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
-    for j in range(len(switcher_dbmode)):
-        print(str(j) + " : " + switcher_dbmode[j])
-        
-    min = 0
-    max = len(switcher_dbmode) - 1
-    n_db = input_int("----- Enter selection (" + str(min) + "-" + str(max) + "): ", min, max)
-    
-    global client
-    
-    if n_db == 0:
-        client = MongoClient(host = "localhost", port = 27017)
-    else:
-        client = MongoClient(conn)
+        switcher_dbmode = {0:'Local', 1:'Alat'}
 
-    choice_dbmode = switcher_dbmode.get(n_db,"Invalid choice")
-    print("***** Choice: " + choice_dbmode + " mode")  
-
-    switcher_mode = {0:'Export', 1:'Import', 2:'Import And Create'}
-
-    for j in range(len(switcher_mode)):
-        print(str(j) + " : " + switcher_mode[j])
-
-    min = 0
-    max = len(switcher_mode) - 1
-    n = input_int("----- Enter selection (" + str(min) + "-" + str(max) + "): ", min, max)
-
-    choice_mode = switcher_mode.get(n,"Invalid choice")
-    print("***** Choice: " + choice_mode + " mode")  
-    
-    if choice_mode != switcher_mode[0]:
-        tmp_collections = []
-        for filename in os.listdir(global_import):
-            if filename.endswith(".json"):
-                tmp_collections.append(os.path.splitext(filename)[0])        
-        if len(tmp_collections) == 0 :
-            print("File import not found")
-            raise SystemExit
-    
-    cmd = "cd " + pathmongodb
-    os.system(cmd) 
-
-    dbs = client.list_database_names()
-    for j in range(len(dbs)):
-        print(str(j) + " : " + dbs[j])
-
-    if choice_mode != switcher_mode[2]:
+        for j in range(len(switcher_dbmode)):
+            print(str(j) + " : " + switcher_dbmode[j])
+            
         min = 0
-        max = len(dbs) - 1
-        m = input_int("----- Enter index of db name (" + str(min) + "-" + str(max) + "): ", min, max)
-    else:
-        min = -1
-        max = len(dbs) - 1
-        m = input_int("----- Enter index of db name (" + str(min) + " = create new) || (" + str(min + 1) + "-" + str(max)+"): ", min, max)
+        max = len(switcher_dbmode) - 1
+        n_db = input_int("----- Enter selection (" + str(min) + "-" + str(max) + "): ", min, max)
+        
+        global client
+        
+        if n_db == 0:
+            client = MongoClient(host = "localhost", port = 27017)
+        else:
+            client = MongoClient(conn)
 
-    if m != -1 :
-        database_name = dbs[m]
-    else:
-        database_name = input("----- Enter db name: ")
-    
-    print("***** Choice: " + database_name)
+        choice_dbmode = switcher_dbmode.get(n_db,"Invalid choice")
+        print("***** Choice: " + choice_dbmode + " mode")  
 
-    if choice_mode != switcher_mode[2]:
-        collections = client[database_name].list_collection_names()
-        min = -1
-        max = len(collections) - 1
-    else:
-        collections = tmp_collections
-        min = -1
-        max = len(collections) - 1
+        switcher_mode = {0:'Export', 1:'Import', 2:'Import And Create'}
 
-    for j in range(len(collections)):
-        print(str(j) + " : " + collections[j])
-    p = input_int("----- Enter index of collection name (" + str(min) + " = all) || (" + str(min + 1) + "-" + str(max) + "): ", min, max)
+        for j in range(len(switcher_mode)):
+            print(str(j) + " : " + switcher_mode[j])
 
-    if(p == -1):
-        run_all(choice_mode, database_name, collections)
-    else:
-        collection_name = collections[p]
-        run_single(choice_mode, database_name, collection_name)     
+        min = 0
+        max = len(switcher_mode) - 1
+        n = input_int("----- Enter selection (" + str(min) + "-" + str(max) + "): ", min, max)
+
+        choice_mode = switcher_mode.get(n,"Invalid choice")
+        print("***** Choice: " + choice_mode + " mode")  
+        
+        if choice_mode != switcher_mode[0]:
+            tmp_collections = []
+            for filename in os.listdir(global_import):
+                if filename.endswith(".json"):
+                    tmp_collections.append(os.path.splitext(filename)[0])        
+            if len(tmp_collections) == 0 :
+                print("File import not found")
+                raise SystemExit
+        
+        cmd = "cd " + pathmongodb
+        os.system(cmd) 
+
+        dbs = client.list_database_names()
+        for j in range(len(dbs)):
+            print(str(j) + " : " + dbs[j])
+
+        if choice_mode != switcher_mode[2]:
+            min = 0
+            max = len(dbs) - 1
+            m = input_int("----- Enter index of db name (" + str(min) + "-" + str(max) + "): ", min, max)
+        else:
+            min = -1
+            max = len(dbs) - 1
+            m = input_int("----- Enter index of db name (" + str(min) + " = create new) || (" + str(min + 1) + "-" + str(max)+"): ", min, max)
+
+        if m != -1 :
+            database_name = dbs[m]
+        else:
+            database_name = input("----- Enter db name: ")
+        
+        print("***** Choice: " + database_name)
+
+        if choice_mode != switcher_mode[2]:
+            collections = client[database_name].list_collection_names()
+            min = -1
+            max = len(collections) - 1
+        else:
+            collections = tmp_collections
+            min = -1
+            max = len(collections) - 1
+
+        for j in range(len(collections)):
+            print(str(j) + " : " + collections[j])
+        p = input_int("----- Enter index of collection name (" + str(min) + " = all) || (" + str(min + 1) + "-" + str(max) + "): ", min, max)
+
+        if(p == -1):
+            run_all(choice_mode, database_name, collections)
+        else:
+            collection_name = collections[p]
+            run_single(choice_mode, database_name, collection_name)     
