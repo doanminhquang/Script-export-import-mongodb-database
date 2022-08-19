@@ -105,7 +105,7 @@ if __name__ == "__main__":
 
     dbs = client.list_database_names()
     for j in range(len(dbs)):
-        print(str(j)+" : "+dbs[j])
+        print(str(j) + " : "+dbs[j])
 
     if choice_mode != switcher_mode[2]:
         min = 0
