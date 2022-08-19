@@ -43,7 +43,7 @@ def run_single(choice_mode,database_name,collection_name):
             mongoexport(database_name,collection_name,path_output)
         else:
             path_input = global_import+collection_name+'.json'
-            mongoimport(database_name,collection_name,path_input)  
+            mongoimport(database_name, collection_name,path_input)  
     except IOError:
         print("File not accessible")
 
