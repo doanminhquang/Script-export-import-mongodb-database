@@ -109,7 +109,7 @@ if __name__ == "__main__":
 
     if choice_mode != switcher_mode[2]:
         min = 0
-        max = len(dbs)-1
+        max = len(dbs) - 1
         m = input_int("----- Enter index of db name (" + str(min) + "-" + str(max) + "): ", min, max)
     else:
         min = -1
