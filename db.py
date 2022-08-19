@@ -103,7 +103,7 @@ if __name__ == "__main__":
             raise SystemExit
     
     cmd = "cd " + pathmongodb
-    returned_value = os.system(cmd) 
+    os.system(cmd) 
 
     dbs = client.list_database_names()
     for j in range(len(dbs)):
