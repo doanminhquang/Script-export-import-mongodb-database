@@ -121,7 +121,7 @@ if __name__ == "__main__":
     else:
         database_name = input("----- Enter db name: ")
     
-    print("***** Choice: "+database_name)
+    print("***** Choice: " + database_name)
 
     if choice_mode != switcher_mode[2]:
         collections = client[database_name].list_collection_names()
