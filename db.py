@@ -54,7 +54,7 @@ def run_all(choice_mode,database_name,collections):
     if(choice_mode == switcher_mode[0]):
         timestr = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
         with zipfile.ZipFile(global_export+database_name+'_'+timestr+'.zip', 'w', zipfile.ZIP_DEFLATED) as zipf:
-            zipdir(global_export + database_name+'/', zipf) 
+            zipdir(global_export + database_name + '/', zipf) 
 
 if __name__ == "__main__":
 
