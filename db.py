@@ -28,7 +28,7 @@ def input_int(str, min, max):
             return n
 
 def mongoexport(database_name, collection_name, path):
-    cmd = "mongoexport --db " + database_name + " --collection " + collection_name + " --out "+path
+    cmd = "mongoexport --db " + database_name + " --collection " + collection_name + " --out "+ path
     os.system(cmd)     
 
 def mongoimport(database_name,collection_name,path):
