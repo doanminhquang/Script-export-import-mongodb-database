@@ -59,6 +59,7 @@ def run_all(choice_mode, database_name, collections):
 if __name__ == "__main__":
 
     pathmongodb = "C:\\Program Files\\MongoDB\\Server\\5.0\\bin"
+    conn=""
 
     switcher_dbmode={0:'Local', 1:'Alat'}
 
@@ -74,7 +75,7 @@ if __name__ == "__main__":
     if n_db == 0:
         client = MongoClient(host = "localhost", port = 27017)
     else:
-        client = MongoClient("")
+        client = MongoClient(conn)
 
     choice_dbmode = switcher_dbmode.get(n_db,"Invalid choice")
     print("***** Choice: " + choice_dbmode + " mode")  
