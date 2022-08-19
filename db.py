@@ -31,7 +31,7 @@ def mongoexport(database_name, collection_name, path):
     cmd = "mongoexport --db " + database_name + " --collection " + collection_name + " --out "+ path
     os.system(cmd)     
 
-def mongoimport(database_name,collection_name,path):
+def mongoimport(database_name, collection_name,path):
     cmd = "mongoimport --db " + database_name + " --collection " + collection_name + " --file "+path
     os.system(cmd) 
 
