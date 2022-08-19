@@ -8,13 +8,26 @@ from pymongo import MongoClient
 global_root = 'data/'
 global_export = global_root + 'export/'
 global_import = global_root + 'import/'
+
+comment_str = 'Script Export/Import: https://github.com/doanminhquang/Script-export-import-mongodb-database'
     
 def zipdir(path, ziph):
-    for root, dirs, files in os.walk(path):
-        for file in files:
-            ziph.write(os.path.join(root, file), 
-                       os.path.relpath(os.path.join(root, file), 
-                                       os.path.join(path, '..')))
+    for folderName, subfolders, filenames in os.walk(path):
+       for filename in filenames:
+           filePath = os.path.join(folderName, filename)
+           ziph.write(filePath, os.path.basename(filePath))
+    
+    ziph.comment = str.encode(comment_str)
+
+
+def create_readme(path):
+    with open(path + '/readme.txt', 'w') as f:
+        f.write(comment_str)
+        
+def create_directory_not_exist(path):
+    isExist = os.path.exists(path)
+    if not isExist:
+      os.makedirs(path)
 
 def input_int(str, min, max):
     while True:
@@ -55,8 +68,17 @@ def run_all(choice_mode, database_name, collections):
         
     if(choice_mode == switcher_mode[0]):
         timestr = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
-        with zipfile.ZipFile(global_export + database_name + '_' + timestr + '.zip', 'w', zipfile.ZIP_DEFLATED) as zipf:
-            zipdir(global_export + database_name + '/', zipf) 
+        path_folder = global_export + database_name
+        
+        len_file = len([name for name in os.listdir(path_folder) if os.path.isfile(os.path.join(path_folder, name))])
+        
+        if len_file != 0:        
+            create_readme(path_folder)       
+        
+            with zipfile.ZipFile(path_folder + '_' + timestr + '.zip', 'w', zipfile.ZIP_DEFLATED) as zipf:
+                zipdir(path_folder + '/', zipf) 
+        else:
+            os.rmdir(path_folder)
 
 if __name__ == "__main__":
 
@@ -145,8 +167,14 @@ if __name__ == "__main__":
             print(str(j) + " : " + collections[j])
         p = input_int("----- Enter index of collection name (" + str(min) + " = all) || (" + str(min + 1) + "-" + str(max) + "): ", min, max)
 
+        path_dir = global_export + database_name
+
+        create_directory_not_exist(path_dir)
+
         if(p == -1):
             run_all(choice_mode, database_name, collections)
         else:
             collection_name = collections[p]
-            run_single(choice_mode, database_name, collection_name)     
+            run_single(choice_mode, database_name, collection_name)   
+            if(choice_mode == switcher_mode[0]):            
+                create_readme(path_dir)
