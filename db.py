@@ -130,7 +130,7 @@ if __name__ == "__main__":
     else:
         collections = tmp_collections
         min = -1
-        max = len(collections)-1
+        max = len(collections) - 1
 
     for j in range(len(collections)):
         print(str(j) + " : " + collections[j])
