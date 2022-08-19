@@ -140,4 +140,4 @@ if __name__ == "__main__":
         run_all(choice_mode,database_name,collections)
     else:
         collection_name = collections[p]
-        run_single(choice_mode, database_name,collection_name)     
+        run_single(choice_mode, database_name, collection_name)     
