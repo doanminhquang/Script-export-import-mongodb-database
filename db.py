@@ -19,7 +19,6 @@ def zipdir(path, ziph):
     
     ziph.comment = str.encode(comment_str)
 
-
 def create_readme(path):
     with open(path + '/readme.txt', 'w') as f:
         f.write(comment_str)
@@ -81,6 +80,7 @@ def run_all(choice_mode, database_name, collections):
             with zipfile.ZipFile(path_folder + '_' + timestr + '.zip', 'w', zipfile.ZIP_DEFLATED) as zipf:
                 zipdir(path_folder + '/', zipf) 
         else:
+            print("Export failed")
             os.rmdir(path_folder)
 
 if __name__ == "__main__":
@@ -165,6 +165,10 @@ if __name__ == "__main__":
             collections = tmp_collections
             min = -1
             max = len(collections) - 1
+            
+        if max == -1:
+            print("Collections not found!")
+            raise SystemExit
 
         for j in range(len(collections)):
             print(str(j) + " : " + collections[j])
