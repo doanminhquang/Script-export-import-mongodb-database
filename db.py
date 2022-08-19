@@ -64,10 +64,10 @@ if __name__ == "__main__":
         data = json.load(json_data_file) 
 
         pathmongodb = data["pathmongodb"]
-        username = data["username"]
+        username = urllib.parse.quote(data["username"])
         password = urllib.parse.quote(data["password"])
         dbname = data["dbname"]
-        conn = "mongodb+srv://"+username+":"+password+"@qlms.wo0ki.mongodb.net/"+dbname+"?retryWrites=true&w=majority"
+        conn = "mongodb+srv://%s:%s@qlms.wo0ki.mongodb.net/%s?retryWrites=true&w=majority"
 
         switcher_dbmode = {0:'Local', 1:'Alat'}
 
@@ -83,7 +83,7 @@ if __name__ == "__main__":
         if n_db == 0:
             client = MongoClient(host = "localhost", port = 27017)
         else:
-            client = MongoClient(conn)
+            client = MongoClient(conn % (username, password, dbname))
 
         choice_dbmode = switcher_dbmode.get(n_db,"Invalid choice")
         print("***** Choice: " + choice_dbmode + " mode")  
