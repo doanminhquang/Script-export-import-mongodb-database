@@ -47,7 +47,7 @@ def run_single(choice_mode,database_name,collection_name):
     except IOError:
         print("File not accessible")
 
-def run_all(choice_mode, database_name,collections):            
+def run_all(choice_mode, database_name, collections):            
     for n in range(len(collections)):
         collection_name = collections[n]
         run_single(choice_mode,database_name,collection_name)      
