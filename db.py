@@ -1,5 +1,5 @@
 import os
-import os.path
+import urllib 
 import zipfile
 from datetime import datetime
 from pymongo import MongoClient
@@ -60,7 +60,9 @@ def run_all(choice_mode, database_name, collections):
 if __name__ == "__main__":
 
     pathmongodb = "C:\\Program Files\\MongoDB\\Server\\5.0\\bin"
-    conn = ""
+    username = ""
+    password = urllib.parse.quote("")
+    conn = "mongodb+srv://"+username+":"+password+"@qlms.wo0ki.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
     switcher_dbmode = {0:'Local', 1:'Alat'}
 
