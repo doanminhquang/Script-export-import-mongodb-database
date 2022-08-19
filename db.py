@@ -72,7 +72,7 @@ if __name__ == "__main__":
     global client
     
     if n_db == 0:
-        client = MongoClient(host="localhost", port=27017)
+        client = MongoClient(host = "localhost", port=27017)
     else:
         client = MongoClient("")
 
