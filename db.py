@@ -66,7 +66,8 @@ if __name__ == "__main__":
         pathmongodb = data["pathmongodb"]
         username = data["username"]
         password = urllib.parse.quote(data["password"])
-        conn = "mongodb+srv://"+username+":"+password+"@qlms.wo0ki.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+        dbname = data["dbname"]
+        conn = "mongodb+srv://"+username+":"+password+"@qlms.wo0ki.mongodb.net/"+dbname+"?retryWrites=true&w=majority"
 
         switcher_dbmode = {0:'Local', 1:'Alat'}
 
