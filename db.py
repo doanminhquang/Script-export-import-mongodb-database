@@ -77,7 +77,7 @@ if __name__ == "__main__":
         client = MongoClient("")
 
     choice_dbmode = switcher_dbmode.get(n_db,"Invalid choice")
-    print("***** Choice: "+choice_dbmode+" mode")  
+    print("***** Choice: " + choice_dbmode+" mode")  
 
     switcher_mode={0:'Export', 1:'Import', 2:'Import And Create'}
 
