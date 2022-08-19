@@ -67,7 +67,7 @@ if __name__ == "__main__":
         
     min = 0
     max = len(switcher_dbmode)-1
-    n_db = input_int("----- Enter selection (" + str(min) + "-" + str(max) + "): ",min,max)
+    n_db = input_int("----- Enter selection (" + str(min) + "-" + str(max) + "): ", min,max)
     
     global client
     
