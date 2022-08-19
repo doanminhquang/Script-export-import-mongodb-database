@@ -82,7 +82,7 @@ if __name__ == "__main__":
     switcher_mode={0:'Export', 1:'Import', 2:'Import And Create'}
 
     for j in range(len(switcher_mode)):
-        print(str(j) + " : "+switcher_mode[j])
+        print(str(j) + " : " + switcher_mode[j])
 
     min = 0
     max = len(switcher_mode)-1
