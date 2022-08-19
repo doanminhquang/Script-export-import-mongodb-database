@@ -81,7 +81,7 @@ if __name__ == "__main__":
     choice_dbmode = switcher_dbmode.get(n_db,"Invalid choice")
     print("***** Choice: " + choice_dbmode + " mode")  
 
-    switcher_mode={0:'Export', 1:'Import', 2:'Import And Create'}
+    switcher_mode = {0:'Export', 1:'Import', 2:'Import And Create'}
 
     for j in range(len(switcher_mode)):
         print(str(j) + " : " + switcher_mode[j])
