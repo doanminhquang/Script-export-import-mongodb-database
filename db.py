@@ -39,7 +39,7 @@ def run_single(choice_mode,database_name,collection_name):
     try:
         print("***** Choice: "+collection_name)
         if(choice_mode == switcher_mode[0]):
-            path_output = global_export + database_name + '/' + collection_name+'.json'
+            path_output = global_export + database_name + '/' + collection_name + '.json'
             mongoexport(database_name , collection_name , path_output)
         else:
             path_input = global_import + collection_name + '.json'
