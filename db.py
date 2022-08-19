@@ -15,7 +15,7 @@ def zipdir(path, ziph):
                        os.path.relpath(os.path.join(root, file), 
                                        os.path.join(path, '..')))
 
-def input_int(str,min,max):
+def input_int(str, min,max):
     while True:
         try:
             n = int(input(str))
