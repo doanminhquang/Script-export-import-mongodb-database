@@ -63,7 +63,7 @@ if __name__ == "__main__":
     switcher_dbmode={0:'Local', 1:'Alat'}
 
     for j in range(len(switcher_dbmode)):
-        print(str(j)+" : "+switcher_dbmode[j])
+        print(str(j) + " : "+switcher_dbmode[j])
         
     min = 0
     max = len(switcher_dbmode) - 1
