@@ -114,7 +114,7 @@ if __name__ == "__main__":
     else:
         min = -1
         max = len(dbs)-1
-        m = input_int("----- Enter index of db name ("+str(min)+" = create new) || ("+str(min+1)+"-"+str(max)+"): ",min,max)
+        m = input_int("----- Enter index of db name (" + str(min)+" = create new) || ("+str(min+1)+"-"+str(max)+"): ",min,max)
 
     if m != -1 :
         database_name = dbs[m]
