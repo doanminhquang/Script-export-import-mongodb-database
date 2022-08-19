@@ -62,7 +62,7 @@ if __name__ == "__main__":
     pathmongodb = "C:\\Program Files\\MongoDB\\Server\\5.0\\bin"
     conn = ""
 
-    switcher_dbmode={0:'Local', 1:'Alat'}
+    switcher_dbmode = {0:'Local', 1:'Alat'}
 
     for j in range(len(switcher_dbmode)):
         print(str(j) + " : " + switcher_dbmode[j])
