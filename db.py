@@ -134,7 +134,7 @@ if __name__ == "__main__":
 
     for j in range(len(collections)):
         print(str(j)+" : "+collections[j])
-    p = input_int("----- Enter index of collection name ("+str(min)+" = all) || ("+str(min+1)+"-"+str(max)+"): ",min,max)
+    p = input_int("----- Enter index of collection name (" + str(min)+" = all) || ("+str(min+1)+"-"+str(max)+"): ",min,max)
 
     if(p == -1):
         run_all(choice_mode, database_name, collections)
