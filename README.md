@@ -7,3 +7,11 @@
 ### Yêu cầu:
 Python 3.6.4<br>
 pymongo==4.1.1
+
+### Hường dẫn sử dụng:
+Cài đặt các thư viện và phần mềm cần thiết đã liệt kê ở trên. <br>
+Tùy chính lại config.json cho phù hợp <br>
+Lệnh chạy: python db.py
+
+### Lưu ý:
+Đây chỉ là script để hạn chế bớt việc phải gõ lệnh của ***MongoDB Database Tools*** và một vài thao tác khác để thuận tiện cho việc backup database
