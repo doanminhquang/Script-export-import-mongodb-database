@@ -32,9 +32,9 @@ def run_all(choice_mode, database_name, collections):
         timestr = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
         path_folder = '%s%s' % (global_export, database_name)
         
-        len_file = LenFolder(path_folder)
+        count_file_in_folder = LenFolder(path_folder)
         
-        if len_file != 0:        
+        if count_file_in_folder != 0:        
             CreateReadmeTxt(path_folder, comment_str)       
             
             with zipfile.ZipFile('%s_%s.zip' % (path_folder, timestr), 'w', zipfile.ZIP_DEFLATED) as zipf:
@@ -53,6 +53,8 @@ if __name__ == "__main__":
         password = urllib.parse.quote(data["password"])
         dbname = data["dbname"]
         conn = data["conn"]
+        hostlocal = data["host"]
+        portlocal = data["port"]
         comment_str = data["comment"]
 
         switcher_dbmode = {0:'Local', 1:'Alat'}
@@ -67,7 +69,7 @@ if __name__ == "__main__":
         global client
         
         if n_db == 0:
-            client = MongoClient(host = "localhost", port = 27017)
+            client = MongoClient(host = hostlocal, port = int(portlocal))
         else:
             client = MongoClient(conn % (username, password, dbname))
 
@@ -145,7 +147,7 @@ if __name__ == "__main__":
             run_single(choice_mode, database_name, collection_name)   
             
             if(choice_mode == switcher_mode[0]):     
-                len_file = LenFolder(path_dir)
+                count_file_in_folder = LenFolder(path_dir)
                 
-                if len_file != 0:              
+                if count_file_in_folder != 0:              
                     CreateReadmeTxt(path_dir, comment_str)
