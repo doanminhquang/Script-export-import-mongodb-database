@@ -4,5 +4,7 @@
    "password":"",
    "dbname":"",
    "conn":"mongodb+srv://%s:%s@qlms.wo0ki.mongodb.net/%s?retryWrites=true&w=majority",
+   "host":"localhost",
+   "port":"27017",
    "comment":"Script Export/Import: https://github.com/doanminhquang/Script-export-import-mongodb-database"
 }
