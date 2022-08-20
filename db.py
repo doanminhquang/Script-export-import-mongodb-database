@@ -54,7 +54,7 @@ if __name__ == "__main__":
         dbname = data["dbname"]
         conn = data["conn"]
         hostlocal = data["host"]
-        portlocal = data["port"]
+        portlocal = int(data["port"])
         comment_str = data["comment"]
 
         switcher_dbmode = {0:'Local', 1:'Alat'}
@@ -69,7 +69,7 @@ if __name__ == "__main__":
         global client
         
         if n_db == 0:
-            client = MongoClient(host = hostlocal, port = int(portlocal))
+            client = MongoClient(host = hostlocal, port = portlocal)
         else:
             client = MongoClient(conn % (username, password, dbname))
 
