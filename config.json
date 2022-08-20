@@ -2,5 +2,7 @@
    "pathmongodb":"C:\\Program Files\\MongoDB\\Server\\5.0\\bin",
    "username":"",
    "password":"",
-   "dbname":""
+   "dbname":"",
+   "conn":"mongodb+srv://%s:%s@qlms.wo0ki.mongodb.net/%s?retryWrites=true&w=majority",
+   "comment":"Script Export/Import: https://github.com/doanminhquang/Script-export-import-mongodb-database"
 }
