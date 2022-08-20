@@ -10,7 +10,7 @@ pymongo==4.1.1
 
 ### Hường dẫn sử dụng:
 Cài đặt các thư viện và phần mềm cần thiết đã liệt kê ở trên. <br>
-Tùy chính lại config.json cho phù hợp <br>
+Tùy chỉnh lại tệp config.json cho phù hợp <br>
 Lệnh chạy: python db.py
 
 ### Lưu ý:
