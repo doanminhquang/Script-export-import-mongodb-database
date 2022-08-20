@@ -1,7 +1,7 @@
 from os import system
 
 def GoToMongoDB(path):
-    cmd = "cd " + path
+    cmd = "cd %s" % (path)
     system(cmd) 
 
 def MongoExport(database_name, collection_name, path):
