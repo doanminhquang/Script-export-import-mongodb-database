@@ -23,8 +23,7 @@ def run_single(choice_mode, database_name, collection_name):
     except IOError:
         print("File not accessible")
 
-def run_all(choice_mode, database_name, collections):           
-
+def run_all(choice_mode, database_name, collections):        
     switcher_ext = {0:'JSON ONLY', 1:'JSON AND BSON'}
 
     for j in range(len(switcher_ext)):
@@ -62,7 +61,6 @@ def run_all(choice_mode, database_name, collections):
         else:
             print("Export failed")
             os.rmdir(path_folder)
-        
 
 if __name__ == "__main__":
 
