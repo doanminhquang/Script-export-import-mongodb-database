@@ -23,7 +23,7 @@ def run_single(choice_mode, database_name, collection_name):
     except IOError:
         print("File not accessible")
 
-def run_all(choice_mode, database_name, collections):        
+def run_all(choice_mode, database_name, collections):          
     switcher_ext = {0:'JSON ONLY', 1:'JSON AND BSON'}
 
     for j in range(len(switcher_ext)):
@@ -34,7 +34,7 @@ def run_all(choice_mode, database_name, collections):
     n_ext = InputInt("----- Enter selection (%s - %s): " %(str(min), str(max)), min, max)    
     
     choice_ext = switcher_ext.get(n_ext,"Invalid choice")
-    print("***** Choice: %s Extension" %(choice_ext))  
+    print("***** Choice extension: %s" %(choice_ext))  
     
     if(choice_ext == switcher_ext[0]):
         for n in range(len(collections)):
@@ -60,7 +60,7 @@ def run_all(choice_mode, database_name, collections):
                 ZipDir('%s/' %(path_folder), zipf, comment_str) 
         else:
             print("Export failed")
-            os.rmdir(path_folder)
+            os.rmdir(path_folder)       
 
 if __name__ == "__main__":
 
