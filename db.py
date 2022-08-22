@@ -4,7 +4,7 @@ import urllib
 import zipfile
 from datetime import datetime
 from pymongo import MongoClient
-from module.MongoDBTerminal import GoToMongoDB, MongoExport, MongoImport
+from module.MongoDBTerminal import GoToMongoDB, MongoExport, MongoImport, MongoDump, MongoRestore
 from module.Utils import ZipDir, CreateReadmeTxt, CreateDirectoryNotExist, LenFolder, InputInt
 
 global_root = 'data/'
@@ -15,20 +15,40 @@ def run_single(choice_mode, database_name, collection_name):
     try:
         print("***** Choice: %s" % (collection_name))
         if(choice_mode == switcher_mode[0]):
-            path_output = '%s%s/%s.json' % (global_export,database_name,collection_name)            
+            path_output = '%s%s/%s.json' % (global_export, database_name, collection_name)     
             MongoExport(database_name , collection_name , path_output)
         else:
-            path_input = '%s%s.json' % (global_import,collection_name) 
+            path_input = '%s%s.json' % (global_import, collection_name) 
             MongoImport(database_name, collection_name, path_input)  
     except IOError:
         print("File not accessible")
 
-def run_all(choice_mode, database_name, collections):            
-    for n in range(len(collections)):
-        collection_name = collections[n]
-        run_single(choice_mode, database_name, collection_name)      
-        
-    if(choice_mode == switcher_mode[0]):
+def run_all(choice_mode, database_name, collections):           
+
+    switcher_ext = {0:'JSON ONLY', 1:'JSON AND BSON'}
+
+    for j in range(len(switcher_ext)):
+        print("%s : %s" %(str(j), switcher_ext[j]))
+            
+    min = 0
+    max = len(switcher_ext) - 1
+    n_ext = InputInt("----- Enter selection (%s - %s): " %(str(min), str(max)), min, max)    
+    
+    choice_ext = switcher_ext.get(n_ext,"Invalid choice")
+    print("***** Choice: %s Extension" %(choice_ext))  
+    
+    if(choice_ext == switcher_ext[0]):
+        for n in range(len(collections)):
+            collection_name = collections[n]
+            run_single(choice_mode, database_name, collection_name) 
+    else:
+        if(choice_mode == switcher_mode[0]):
+            MongoDump(database_name, global_export)
+        else:
+            path_input = '%s%s' % (global_import, database_name)
+            MongoRestore(database_name, path_input)
+
+    if(choice_mode == switcher_mode[0]):    
         timestr = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
         path_folder = '%s%s' % (global_export, database_name)
         
@@ -42,6 +62,7 @@ def run_all(choice_mode, database_name, collections):
         else:
             print("Export failed")
             os.rmdir(path_folder)
+        
 
 if __name__ == "__main__":
 
@@ -92,12 +113,15 @@ if __name__ == "__main__":
         
         if choice_mode != switcher_mode[0]:
             tmp_collections = []
-            for filename in os.listdir(global_import):
+            for filename in os.listdir(global_import):            
                 if filename.endswith(".json"):
-                    tmp_collections.append(os.path.splitext(filename)[0])        
-            if len(tmp_collections) == 0 :
-                print("File import not found")
-                raise SystemExit                
+                   tmp_collections.append(os.path.splitext(filename)[0])     
+
+            subfolders = [ f.path for f in os.scandir(global_import) if f.is_dir() ]
+                      
+            if len(tmp_collections) == 0 and len(subfolders) == 0:
+                print("File/Folder import not found")
+                raise SystemExit  
         
         dbs = client.list_database_names()
         for j in range(len(dbs)):
